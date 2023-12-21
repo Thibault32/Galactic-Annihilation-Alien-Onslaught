@@ -28,13 +28,13 @@ while running:
 # Détecter le mouvement du joueur
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player.move(-1, 0)
+        player.move(-player.velocity, 0)
     if keys[pygame.K_RIGHT]:
-        player.move(1, 0)
+        player.move(player.velocity, 0)
     if keys[pygame.K_UP]:
-        player.move(0, -1)
+        player.move(0, -player.velocity)
     if keys[pygame.K_DOWN]:
-        player.move(0, 1)
+        player.move(0, player.velocity)
 
     # Dessiner le joueur
     screen.blit(player.image, player.rect) 
