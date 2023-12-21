@@ -8,6 +8,7 @@ print("Chargement des assets")
 # Create the screen
 pygame.display.set_caption("Galactic Annihilation: Alien Onslaught")
 screen = pygame.display.set_mode((700, 1000))
+screen_rect = screen.get_rect()
 
 running = True
 
@@ -28,16 +29,19 @@ while running:
 # Détecter le mouvement du joueur
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player.move(-player.velocity, 0)
+        player.move(-1, 0)
     if keys[pygame.K_RIGHT]:
         player.move(player.velocity, 0)
     if keys[pygame.K_UP]:
-        player.move(0, -player.velocity)
+        player.move(0, -1)
     if keys[pygame.K_DOWN]:
         player.move(0, player.velocity)
 
+    # Garder le joueur dans l'écran
+    player.rect.clamp_ip(screen_rect)
+
     # Dessiner le joueur
-    screen.blit(player.image, player.rect) 
+    screen.blit(player.image, player.rect)
 
 
 #mettre à jour l'écran

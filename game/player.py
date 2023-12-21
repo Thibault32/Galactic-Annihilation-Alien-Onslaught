@@ -1,13 +1,15 @@
 import pygame
 import os
 
+clock = pygame.time.Clock()
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
         # Charger l'image du joueur
         self.image = pygame.image.load(os.path.join("assets", "player.png"))
-        self.image = pygame.transform.scale(self.image, (150, 150))
+        self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
 
         # Placer le joueur aux coordonnées (x, y)
@@ -15,7 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = y
 
         # Initialiser les statistiques du joueur
-        self.velocity = 0,5
+        self.velocity = 1
         self.health = 100
         self.max_health = 100
 
