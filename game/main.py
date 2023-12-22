@@ -1,6 +1,9 @@
 import pygame
-pygame.init()
 from player import Player
+from enemy import Enemy
+from game import game
+pygame.init()
+
 
 print("Lancement du jeu")
 print("Chargement des assets")
@@ -9,6 +12,13 @@ print("Chargement des assets")
 pygame.display.set_caption("Galactic Annihilation: Alien Onslaught")
 screen = pygame.display.set_mode((700, 1000))
 screen_rect = screen.get_rect()
+screen_info = pygame.display.Info()
+screen_width = screen_info.current_w
+screen_height = screen_info.current_h
+
+# Définir la taille de la fenêtre
+window_width = int(screen_width * 0.5)  # Par exemple, 80% de la largeur de l'écran
+window_height = int(screen_height * 0.5)  # Par exemple, 80% de la hauteur de l'écran
 
 running = True
 
@@ -18,7 +28,8 @@ background = pygame.transform.scale(background, (1080, 720))
 background = pygame.transform.rotate(background, -90)
 
 # Charger notre joueur
-player = Player(300, 500)
+player = Player(300, 800)
+
 
 #boucle tant que running est vrai
 while running:
@@ -43,6 +54,8 @@ while running:
     # Dessiner le joueur
     screen.blit(player.image, player.rect)
 
+    #appliquer l'ensemble des images de mon groupe d'enemy
+    game.all_enemy.draw(screen)
 
 #mettre à jour l'écran
     pygame.display.flip()
