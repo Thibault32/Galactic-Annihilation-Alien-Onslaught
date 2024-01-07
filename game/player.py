@@ -20,6 +20,10 @@ class Player(pygame.sprite.Sprite):
         self.velocity = 1
         self.health = 100
         self.max_health = 100
+        self.shooting_speed = 250
+
+        self.is_shooting = False
+        self.last_shot = pygame.time.get_ticks()
 
     def move(self, dx, dy):
         # Déplacer le joueur avec les valeurs (dx, dy)

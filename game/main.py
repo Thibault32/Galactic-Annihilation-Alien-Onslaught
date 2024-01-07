@@ -1,6 +1,7 @@
 import pygame
 from player import Player
 from enemy import Enemy
+from projectile import Projectile
 from game import game
 pygame.init()
 
@@ -30,23 +31,20 @@ background = pygame.transform.rotate(background, -90)
 # Charger notre joueur
 player = Player(300, 800)
 
+# Projectiles
+projectiles = []
 
 #boucle tant que running est vrai
 while running:
     #appliquer l'arrière plan de notre jeu
     screen.blit(background, (0, 0))
 
-
-# Détecter le mouvement du joueur
+    # Détecter le mouvement du joueur
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         player.move(-1, 0)
     if keys[pygame.K_RIGHT]:
         player.move(player.velocity, 0)
-    if keys[pygame.K_UP]:
-        player.move(0, -1)
-    if keys[pygame.K_DOWN]:
-        player.move(0, player.velocity)
 
     # Garder le joueur dans l'écran
     player.rect.clamp_ip(screen_rect)
@@ -54,10 +52,30 @@ while running:
     # Dessiner le joueur
     screen.blit(player.image, player.rect)
 
-    #appliquer l'ensemble des images de mon groupe d'enemy
-    game.all_enemy.draw(screen)
+    # Dessiner la barre de vie du joueur
+    pygame.draw.rect(screen, (60, 63, 60), [player.rect.x, player.rect.y + 120, player.max_health, 5])
+    pygame.draw.rect(screen, (111, 210, 46), [player.rect.x, player.rect.y + 120, player.health, 5])
 
-#mettre à jour l'écran
+    # Tirer un projectile
+    if keys[pygame.K_SPACE] and not player.is_shooting:
+        projectiles.append(Projectile(player.rect.x + 50, player.rect.y + 50, "projectile"))
+        player.is_shooting = True
+    
+    if player.is_shooting:
+        now = pygame.time.get_ticks()
+        if now - player.last_shot > player.shooting_speed:
+            player.last_shot = now
+            player.is_shooting = False
+
+    # Gestion des projectiles
+    for projectile in projectiles:
+        projectile.move(-1)
+        screen.blit(projectile.image, projectile.rect)
+
+    #appliquer l'ensemble des images de mon groupe d'enemy
+    #game.all_enemy.draw(screen)
+
+    #mettre à jour l'écran
     pygame.display.flip()
 
     #si le joueur ferme cette fenêtre
