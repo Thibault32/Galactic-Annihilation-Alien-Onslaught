@@ -1,8 +1,9 @@
 import pygame
+import random
+import os
 from player import Player
 from enemy import Enemy
 from projectile import Projectile
-from game import game
 pygame.init()
 
 
@@ -33,6 +34,10 @@ player = Player(300, 800)
 
 # Projectiles
 projectiles = []
+enemy_projectiles = []
+
+# Groupe d'ennemis
+all_enemies = []
 
 #boucle tant que running est vrai
 while running:
@@ -64,6 +69,7 @@ while running:
         projectiles.append(Projectile(player.rect.x + 50, player.rect.y, "projectile"))
         player.is_shooting = True
     
+    # Gestion du cooldown de tir
     if player.is_shooting:
         now = pygame.time.get_ticks()
         if now - player.last_shot > player.shooting_speed:
@@ -79,6 +85,52 @@ while running:
         if projectile.rect.x < 0:
             projectile.kill()
             projectiles.remove(projectile)
+        
+        # Vérifier si le projectile touche un ennemi
+        for enemy in all_enemies:
+            if projectile.rect.colliderect(enemy.rect) and not enemy.is_dead:
+                enemy.health -= projectile.damage
+                projectile.kill()
+                projectiles.remove(projectile)
+
+                if enemy.health <= 0 and not enemy.is_dead:
+                    enemy.image = pygame.image.load(os.path.join("assets", "death.png"))
+                    enemy.image = pygame.transform.scale(enemy.image, (100, 100))
+                    screen.blit(enemy.image, enemy.rect)
+                    enemy.death_time = pygame.time.get_ticks()
+                    enemy.is_dead = True
+
+    # Gestion des ennemis
+    if len(all_enemies) == 0:
+        all_enemies.append(Enemy(300, 100))
+
+    for enemy in all_enemies:
+        if enemy.is_dead:
+            screen.blit(enemy.image, enemy.rect)
+            now = pygame.time.get_ticks()
+            if now - enemy.death_time > 500:
+                enemy.kill()
+                all_enemies.remove(enemy)
+        else:
+            enemy.move(gamespeed)
+            screen.blit(enemy.image, enemy.rect)
+            enemy.rect.clamp_ip(screen_rect)
+
+    # Gestion des projectiles ennemis
+    for projectile in enemy_projectiles:
+        projectile.move(1 * gamespeed)
+        screen.blit(projectile.image, projectile.rect)
+
+        # Supprimer le projectile s'il sort de l'écran
+        if projectile.rect.x < 0:
+            projectile.kill()
+            enemy_projectiles.remove(projectile)
+        
+        # Vérifier si le projectile touche le joueur
+        if projectile.rect.colliderect(player.rect):
+            player.health -= projectile.damage
+            projectile.kill()
+            enemy_projectiles.remove(projectile)
 
     #appliquer l'ensemble des images de mon groupe d'enemy
     #game.all_enemy.draw(screen)
