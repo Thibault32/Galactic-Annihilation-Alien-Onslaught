@@ -39,6 +39,10 @@ enemy_projectiles = []
 # Groupe d'ennemis
 all_enemies = []
 
+# Charger notre score
+score = 0
+score_increment = 10 # modifier cette variable si le joueur a un multiplicateur de score
+
 #boucle tant que running est vrai
 while running:
     # Mettre le jeu à une framerate fixe
@@ -46,6 +50,11 @@ while running:
 
     #appliquer l'arrière plan de notre jeu
     screen.blit(background, (0, 0))
+
+    # Afficher le score
+    font = pygame.font.Font(None, 30)
+    score_text = font.render("Score: " + str(score), 1, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
 
     # Détecter le mouvement du joueur
     keys = pygame.key.get_pressed()
@@ -100,6 +109,7 @@ while running:
                     screen.blit(enemy.image, enemy.rect)
                     enemy.death_time = pygame.time.get_ticks()
                     enemy.is_dead = True
+                    score += score_increment
 
     # Gestion des ennemis
     if len(all_enemies) == 0:
