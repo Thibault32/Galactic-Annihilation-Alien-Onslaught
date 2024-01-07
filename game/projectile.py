@@ -23,3 +23,7 @@ class Projectile(pygame.sprite.Sprite):
     def move(self, direction):
         # Déplacer le projetile dans la direction specifiée
         self.rect.y += direction
+
+    def kill(self):
+        # Supprimer le projectile
+        super().kill()

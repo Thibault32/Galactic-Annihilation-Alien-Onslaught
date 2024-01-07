@@ -37,7 +37,7 @@ projectiles = []
 #boucle tant que running est vrai
 while running:
     # Mettre le jeu à une framerate fixe
-    pygame.time.Clock().tick(1000)
+    gamespeed = pygame.time.Clock().tick(60)
 
     #appliquer l'arrière plan de notre jeu
     screen.blit(background, (0, 0))
@@ -45,9 +45,9 @@ while running:
     # Détecter le mouvement du joueur
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player.move(-1, 0)
+        player.move(-1 * player.velocity * gamespeed, 0)
     if keys[pygame.K_RIGHT]:
-        player.move(player.velocity, 0)
+        player.move(1 * player.velocity * gamespeed, 0)
 
     # Garder le joueur dans l'écran
     player.rect.clamp_ip(screen_rect)
@@ -72,8 +72,13 @@ while running:
 
     # Gestion des projectiles
     for projectile in projectiles:
-        projectile.move(-1)
+        projectile.move(-1 * gamespeed)
         screen.blit(projectile.image, projectile.rect)
+
+        # Supprimer le projectile s'il sort de l'écran
+        if projectile.rect.x < 0:
+            projectile.kill()
+            projectiles.remove(projectile)
 
     #appliquer l'ensemble des images de mon groupe d'enemy
     #game.all_enemy.draw(screen)
