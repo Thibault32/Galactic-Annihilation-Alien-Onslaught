@@ -36,6 +36,9 @@ projectiles = []
 
 #boucle tant que running est vrai
 while running:
+    # Mettre le jeu à une framerate fixe
+    pygame.time.Clock().tick(1000)
+
     #appliquer l'arrière plan de notre jeu
     screen.blit(background, (0, 0))
 
@@ -58,7 +61,7 @@ while running:
 
     # Tirer un projectile
     if keys[pygame.K_SPACE] and not player.is_shooting:
-        projectiles.append(Projectile(player.rect.x + 50, player.rect.y + 50, "projectile"))
+        projectiles.append(Projectile(player.rect.x + 50, player.rect.y, "projectile"))
         player.is_shooting = True
     
     if player.is_shooting:
