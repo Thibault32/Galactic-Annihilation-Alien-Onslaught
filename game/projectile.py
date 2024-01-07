@@ -9,7 +9,7 @@ class Projectile(pygame.sprite.Sprite):
 
         # Charger l'image du projectile
         self.image = pygame.image.load(os.path.join("assets", type + ".png"))
-        self.image = pygame.transform.scale(self.image, (25, 25))
+        self.image = pygame.transform.scale(self.image, (15, 25))
         self.rect = self.image.get_rect()
 
         # Placer le projectile aux coordonnées (x, y)
