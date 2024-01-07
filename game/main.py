@@ -52,7 +52,7 @@ while running:
     screen.blit(background, (0, 0))
 
     # Afficher le score
-    font = pygame.font.Font(None, 30)
+    font = pygame.font.Font("assets/font.ttf", 15)
     score_text = font.render("Score: " + str(score), 1, (255, 255, 255))
     screen.blit(score_text, (10, 10))
 
