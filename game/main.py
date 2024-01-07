@@ -56,8 +56,8 @@ while running:
     screen.blit(player.image, player.rect)
 
     # Dessiner la barre de vie du joueur
-    pygame.draw.rect(screen, (60, 63, 60), [player.rect.x, player.rect.y + 120, player.max_health, 5])
-    pygame.draw.rect(screen, (111, 210, 46), [player.rect.x, player.rect.y + 120, player.health, 5])
+    pygame.draw.rect(screen, (60, 63, 60), [(player.rect.x + 50) - (player.max_health / 2), player.rect.y + 120, player.max_health, 5])
+    pygame.draw.rect(screen, (111, 210, 46), [(player.rect.x + 50) - (player.max_health / 2), player.rect.y + 120, player.health, 5])
 
     # Tirer un projectile
     if keys[pygame.K_SPACE] and not player.is_shooting:
