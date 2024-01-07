@@ -93,6 +93,7 @@ while running:
                 projectile.kill()
                 projectiles.remove(projectile)
 
+                # Vérifier si l'ennemi est mort
                 if enemy.health <= 0 and not enemy.is_dead:
                     enemy.image = pygame.image.load(os.path.join("assets", "death.png"))
                     enemy.image = pygame.transform.scale(enemy.image, (100, 100))
@@ -117,6 +118,14 @@ while running:
             enemy.rect.clamp_ip(screen_rect)
 
     # Gestion des projectiles ennemis
+    for enemy in all_enemies:
+        if not enemy.is_dead:
+            now = pygame.time.get_ticks()
+            if now - enemy.last_shot > 250:
+                if random.choice([True, False]):
+                    enemy_projectiles.append(Projectile(enemy.rect.x + 50, enemy.rect.y + 100, "enemy_projectile"))
+                enemy.last_shot = now
+    
     for projectile in enemy_projectiles:
         projectile.move(1 * gamespeed)
         screen.blit(projectile.image, projectile.rect)

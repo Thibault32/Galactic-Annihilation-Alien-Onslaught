@@ -26,6 +26,7 @@ class Enemy(pygame.sprite.Sprite):
         self.attack = 5
         self.last_move = 0
         self.last_movement = pygame.time.get_ticks()
+        self.last_shot = pygame.time.get_ticks()
 
         # Déterminer sa mort
         self.death_time = 0
