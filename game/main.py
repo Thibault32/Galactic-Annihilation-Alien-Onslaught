@@ -151,13 +151,10 @@ while running:
             projectile.kill()
             enemy_projectiles.remove(projectile)
 
-    #appliquer l'ensemble des images de mon groupe d'enemy
-    #game.all_enemy.draw(screen)
-
-    #mettre à jour l'écran
+    # Mettre à jour l'écran
     pygame.display.flip()
 
-    #si le joueur ferme cette fenêtre
+    # Si le joueur ferme cette fenêtre
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
