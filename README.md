@@ -1,2 +1,2 @@
 # V2-Galactic-Annihilation-Alien-Onslaught
-vasco si tu lis ça tu es gay
+eh wala tibo je suis même pas arabe mais t'es pas hallal
