@@ -4,7 +4,7 @@ import os
 clock = pygame.time.Clock()
 
 class Projectile(pygame.sprite.Sprite):
-    def __init__(self, x, y, type):
+    def __init__(self, x, y, type, attack):
         super().__init__()
 
         # Charger l'image du projectile
@@ -18,7 +18,7 @@ class Projectile(pygame.sprite.Sprite):
 
         # Initialiser les statistiques du projectile
         self.velocity = 1
-        self.damage = 10
+        self.damage = attack
 
     def move(self, direction):
         # Déplacer le projetile dans la direction specifiée

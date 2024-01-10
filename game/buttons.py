@@ -2,16 +2,32 @@ import pygame
 import os
 
 class Button():
-    def __init__(self, x, y, image, scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pygame_transform.scale(image, (int(width * scale), int(height * scale)))
+    def __init__(self, screen_width, screen_height, image, type):
+        super().__init__()
+
+        ratio = 1
+        if type == "youtube":
+            ratio = 0.3
+
+        # Charger l'image du bouton
+        self.image = image
+        self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * ratio), int(self.image.get_height() * ratio)))
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+
+        # Placer les boutons aux coordonnées (x, y)
+        self.rect.x = screen_width / 2 - self.rect.width / 2
+        
+        if type == "play":
+            self.rect.y = screen_height / 2 - self.rect.height / 2
+        elif type == "quit":
+            self.rect.y = (screen_height / 2 - self.rect.height / 2) + 250
+        elif type == "youtube":
+            self.rect.y = screen_height - 100
+
+        # Initialiser les valeurs du bouton
         self.clicked = False
 
     def draw(self, surface):
-        
         action = False
 
         # Obtenir la position de la souris
@@ -25,14 +41,8 @@ class Button():
         
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked
-        
 
         # Dessiner le bouton sur l'écran
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
-
-#créer bouton instances
-play_button = Button(100, 200, play_img, 0.5)
-settings_button = Button(100, 400, settings_img, 0.5)
-quit_button = Button(100, 600, quit_img, 0.5)

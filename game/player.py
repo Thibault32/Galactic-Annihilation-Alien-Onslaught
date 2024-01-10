@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 100
         self.max_health = 100
         self.shooting_speed = 250
+        self.attack = 10
 
         self.is_shooting = False
         self.last_shot = pygame.time.get_ticks()

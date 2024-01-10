@@ -9,9 +9,10 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
 
         skins = ["enemie.png", "red enemie.png"]
+        skin = random.choice(skins)
 
         # Charger l'image du joueur
-        self.image = pygame.image.load(os.path.join("assets", random.choice(skins)))
+        self.image = pygame.image.load(os.path.join("assets", skin))
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.image = pygame.transform.rotate(self.image, 180)
         self.rect = self.image.get_rect()
@@ -23,7 +24,14 @@ class Enemy(pygame.sprite.Sprite):
         # Initialiser les statistiques de l'ennemi
         self.health = 100
         self.max_health = 100
-        self.attack = 5
+        if skin == "red enemie.png":
+            self.health = 200
+            self.max_health = 200
+        self.attack = 10
+        self.attack_speed = 250
+        if skin == "enemie.png":
+            self.attack = 25
+            self.attack_speed = 500
         self.last_move = 0
         self.last_movement = pygame.time.get_ticks()
         self.last_shot = pygame.time.get_ticks()
