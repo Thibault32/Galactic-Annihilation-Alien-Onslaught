@@ -4,7 +4,10 @@ import os
 from player import Player
 from enemy import Enemy
 from projectile import Projectile
+from menu import draw_textpyt
+from buttons import Button
 pygame.init()
+pygame.font.init()
 
 
 print("Lancement du jeu")
@@ -29,6 +32,11 @@ background = pygame.image.load('assets/parallax-space-backgound-animx1.gif').con
 background = pygame.transform.scale(background, (1080, 720))
 background = pygame.transform.rotate(background, -90)
 
+#charger l'image des boutons
+play_img = pygame.image.load('assets/play_btn.png').convert_alpha()
+settings_img = pygame.image.load('assets/settings_btn.png').convert_alpha()
+quit_img = pygame.image.load('assets/quit_btn.png').convert_alpha()
+
 # Charger notre joueur
 player = Player(300, 800)
 
@@ -44,12 +52,31 @@ score = 0
 score_increment = 10 # modifier cette variable si le joueur a un multiplicateur de score
 
 #boucle tant que running est vrai
+running = True
 while running:
+    
     # Mettre le jeu à une framerate fixe
     gamespeed = pygame.time.Clock().tick(60)
 
     #appliquer l'arrière plan de notre jeu
     screen.blit(background, (0, 0))
+
+    
+    #afficher les boutons du menu
+    if play_button.draw(screen):
+        print("Play")
+    if settings_button.draw(screen):
+        print("Settings")
+    if quit_button.draw(screen):
+        running = False
+    
+    
+    #vérifier si le jeu est en pause
+    if game_paused == True:
+        pass
+        #Afficher le menu
+    else:
+        draw_text("Press ESHAP to pause", font, text_color, 20, 20)
 
     # Afficher le score
     font = pygame.font.Font("assets/font.ttf", 15)
@@ -156,6 +183,9 @@ while running:
 
     # Si le joueur ferme cette fenêtre
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESHAP:
+                game_paused = True
         if event.type == pygame.QUIT:
             running = False
             pygame.quit()
