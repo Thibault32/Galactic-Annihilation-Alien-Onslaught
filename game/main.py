@@ -24,8 +24,6 @@ screen_height = screen_info.current_h
 window_width = int(screen_width * 0.5)  # Par exemple, 80% de la largeur de l'écran
 window_height = int(screen_height * 0.5)  # Par exemple, 80% de la hauteur de l'écran
 
-running = True
-
 # Importer de charger l'arrière plan de notre jeu
 background = pygame.image.load('assets/parallax-space-backgound-animx1.gif').convert()
 background = pygame.transform.scale(background, (1080, 720))
